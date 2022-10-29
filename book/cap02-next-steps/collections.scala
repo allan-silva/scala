@@ -47,4 +47,45 @@ import scala.collection.mutable
 
   printf("%s\n", tvShow)
   printf("Name: %s - Author: %s\n", tvShow(0)("name"), tvShow(0)("author").asInstanceOf[Map[String, Object]]("name"))
+
+  // Function call and asserts
+  val args = formatArgs(List("zero", "one", "two"))
+  assert(args == "zero\none\ntwo")
+
+  // Data transform with mapping and for-yield
+  val adjectives = List("One", "Two", "Red", "Blue")
+  val nouns = adjectives.map(adj => adj + " Fish")
+  printf("%s\n", nouns)
+
+  val nouns2 =
+    for adj <- adjectives yield
+      adj + " Fish Yield"
   
+  printf("%s\n", nouns2)
+
+  // Map is available for other types
+  val ques = Vector("Who", "What", "When", "Where", "Why")
+  val withQuesMark = ques.map(q => q + "?")
+  printf("%s\n", withQuesMark)
+
+  //Option type and map
+  val startsW = ques.find(q => q.startsWith("W"))
+  val hasLen4 = ques.find(q => q.length == 4)
+  val hasLen5 = ques.find(q => q.length == 5)
+  val startsH = ques.find(q => q.startsWith("H"))
+
+  printf("%s\n", List(startsW, hasLen4, hasLen5, startsH).mkString(","))
+
+  //map option
+  printf("%s\n", startsW.map(word => word.toUpperCase()))
+
+  printf("%s\n", for word <- startsW yield word.toUpperCase)
+
+  //map None results in None
+  printf("%s\n", startsH.map(word => word.toUpperCase()))
+
+
+
+
+
+def formatArgs(args: List[String]) = args.mkString("\n")
